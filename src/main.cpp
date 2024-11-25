@@ -28,7 +28,7 @@ void mouse_cursor_position(GLFWwindow* window, double xpos, double ypos);
 void mouse_scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void RenderImGuiWindow();
 void CustomButtons();
-void SimpleImGui();
+void LightImGui();
 
 glm::mat4 model;
 glm::mat4 projection;
@@ -51,9 +51,15 @@ static float angle = -55.0f;
 static bool isTexture = false;
 static bool isColor = false;
 bool ShowDemo = false;
-static float shininess = 32.0f;
-static float ambientStrength = 0.2f;
-static float light_color[3] = { 1.0f ,1.0f , 1.0f };
+static float material_ambient[3] = {1.0f, 1.0f, 1.0f};
+static float material_diffuse[3] = {1.0f, 1.0f, 1.0f};
+static float material_specular[3] = {0.5f, 0.5f, 0.5f};
+static float material_shininess = {64.0f};
+static float light_ambient[3] = { 0.1f, 0.1f, 0.1f};
+static float ambient_Strenght = {1.f};
+static float light_diffuse[3] = { 0.5f, 0.5f, 0.5f};
+static float diffuse_Strenght = {1.f};
+static float light_specular[3] = { 1.0f, 1.0f, 1.0f};
 
 
 int main()
@@ -65,10 +71,10 @@ int main()
     glfwSetScrollCallback(mainWindow.getWindow(), mouse_scroll_callback);
 
 
-	Cube cube("../textures/wood2.png");
+	Cube cube("../textures/container2.png");
 	Pyramid pyramid("../textures/bricks_yellow.jpg");
-	Pyramid pyramid2("../textures/bricks_grey.jpg");
-	Floor floor("../textures/g1572.png");
+	Pyramid pyramid2("../textures/bricks_white.jpg");
+	Floor floor("../textures/Tile_20.png");
 
 	Light light;
 	light.SetSpeed(0.1f);
@@ -99,7 +105,8 @@ int main()
 
 		////////////////////////////////////////////////////////////////
 		/* Render */
-		glClearColor(0.1f, 0.2f, 0.3f, 1.0f); 
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f); 
+		//glClearColor(0.1f, 0.2f, 0.3f, 1.0f); 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		ImGui_ImplOpenGL3_NewFrame();
@@ -107,20 +114,26 @@ int main()
 		ImGui::NewFrame();
 
 		//RenderImGuiWindow();
-		SimpleImGui();
+		LightImGui();
 		if (ShowDemo)
 			ImGui::ShowDemoWindow(&ShowDemo);
 
 		myShader.use();
-		myShader.setVec3("lightColor", light_color[0], light_color[1], light_color[2]);
-		myShader.setVec3("objectColor", 1.0f, 1.0f, 1.0f);
-		myShader.setVec3("lightPos", light.getPosition());
+		//myShader.setVec3("lightColor", light_color[0], light_color[1], light_color[2]);
+		myShader.setVec3("light.position", light.getPosition());
 		myShader.setVec3("viewPos", camera.Position);
-		myShader.setFloat("shininess", shininess);
-		myShader.setFloat("ambientStrength", ambientStrength);
+		myShader.setVec3("light.ambient", light_ambient[0]*ambient_Strenght, light_ambient[1]*ambient_Strenght, light_ambient[2]*ambient_Strenght);
+		myShader.setVec3("light.diffuse", light_diffuse[0]*diffuse_Strenght, light_diffuse[1]*diffuse_Strenght, light_diffuse[2]*diffuse_Strenght);
+		myShader.setVec3("light.specular",light_specular[0], light_specular[1], light_specular[2]);
+		
 		//myShader.setVec3("colors", color_value[0], color_value[1], color_value[2]);
 		//myShader.setBool("isTexture", isTexture);
 		//myShader.setBool("isColor", isColor);
+
+		myShader.setVec3("material.ambient", material_ambient[0], material_ambient[1], material_ambient[2]);
+		myShader.setVec3("material.diffuse", material_diffuse[0], material_diffuse[1], material_diffuse[2]);
+		myShader.setVec3("material.specular", material_specular[0], material_specular[1], material_specular[2]);
+		myShader.setFloat("material.shininess", material_shininess);
 
 		projection = glm::perspective(glm::radians(camera.Zoom), (float)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 100.0f);
 		myShader.setMat4("projection", projection);
@@ -245,15 +258,22 @@ void mouse_scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 }
 
 
-void SimpleImGui()
+void LightImGui()
 {
 	ImGui::Begin("Light test");
 	ImGui::Text("FPS = %f", ImGui::GetIO().Framerate);
 
-	ImGui::SliderFloat("shininess", &shininess, 0.0f, 600.0f);
-	ImGui::SliderFloat("Ambient Value", &ambientStrength, 0.1f, 1.0f);
-	ImGui::SliderFloat3("Light Color", light_color, 0.01f, 1.0f);
-	ImGui::ColorEdit3("Color Edit", light_color);
+	ImGui::SliderFloat3("Material Ambient", material_ambient, 0.0f, 1.0f);
+	ImGui::SliderFloat3("Material Diffuse", material_diffuse, 0.0f, 1.0f);
+	ImGui::SliderFloat3("Material Specular", material_specular, 0.0f, 1.0f);
+	ImGui::SliderFloat("Material Shininess", &material_shininess, 0.0f, 600.f);
+	ImGui::InvisibleButton("##space", ImVec2(1.f,12.f));
+
+	ImGui::SliderFloat("Light Ambient", &ambient_Strenght, 0.0f, 1.0f);
+	ImGui::ColorEdit3("Ambient Color", light_ambient);
+	ImGui::SliderFloat("Light Diffuse", &diffuse_Strenght, 0.0f, 1.0f);
+	ImGui::ColorEdit3("Diffuse Color", light_diffuse);
+	ImGui::SliderFloat3("Light Specular", light_specular, 0.0f, 1.0f);
 
 	ImGui::InvisibleButton("##space", ImVec2(1.f,12.f));
 	CustomButtons();

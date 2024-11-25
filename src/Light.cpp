@@ -7,47 +7,47 @@ Light::Light()
     float vertices[] =
     {
         /*Top Position*/		
-        -0.5f,-0.5f, 0.5f,		1.0f, 0.0f, 0.0f,		0.0f, 0.0f,
-        0.5f,-0.5f, 0.5f,		0.0f, 1.0f, 0.0f,		1.0f, 0.0f,
-        0.5f, 0.5f, 0.5f,		0.0f, 0.0f, 1.0f,		1.0f, 1.0f,
-        0.5f, 0.5f, 0.5f,		0.0f, 0.0f, 1.0f,		1.0f, 1.0f,
-        -0.5f, 0.5f, 0.5f,		1.0f, 1.0f, 0.0f,		0.0f, 1.0f,
-        -0.5f,-0.5f, 0.5f,		1.0f, 0.0f, 0.0f,		0.0f, 0.0f,
+        -0.5f,-0.5f, 0.5f,		1.0f, 0.0f, 0.0f,		
+        0.5f,-0.5f, 0.5f,		0.0f, 1.0f, 0.0f,		
+        0.5f, 0.5f, 0.5f,		0.0f, 0.0f, 1.0f,		
+        0.5f, 0.5f, 0.5f,		0.0f, 0.0f, 1.0f,		
+        -0.5f, 0.5f, 0.5f,		1.0f, 1.0f, 0.0f,		
+        -0.5f,-0.5f, 0.5f,		1.0f, 0.0f, 0.0f,		
         /* Bottom Position */		
-        -0.5f,-0.5f,-0.5f,		1.0f, 0.0f, 0.0f,		0.0f, 0.0f,
-        0.5f,-0.5f,-0.5f,		0.0f, 1.0f, 0.0f,		1.0f, 0.0f,
-        0.5f, 0.5f,-0.5f,		0.0f, 0.0f, 1.0f,		1.0f, 1.0f,
-        0.5f, 0.5f,-0.5f,		0.0f, 0.0f, 1.0f,		1.0f, 1.0f,
-        -0.5f, 0.5f,-0.5f,		1.0f, 1.0f, 0.0f,		0.0f, 1.0f,
-        -0.5f,-0.5f,-0.5f,		1.0f, 0.0f, 0.0f,		0.0f, 0.0f,
+        -0.5f,-0.5f,-0.5f,		1.0f, 0.0f, 0.0f,		
+        0.5f,-0.5f,-0.5f,		0.0f, 1.0f, 0.0f,		
+        0.5f, 0.5f,-0.5f,		0.0f, 0.0f, 1.0f,		
+        0.5f, 0.5f,-0.5f,		0.0f, 0.0f, 1.0f,		
+        -0.5f, 0.5f,-0.5f,		1.0f, 1.0f, 0.0f,		
+        -0.5f,-0.5f,-0.5f,		1.0f, 0.0f, 0.0f,		
         /* Left Position */		
-        -0.5f,-0.5f,-0.5f,		1.0f, 0.0f, 0.0f,		0.0f, 0.0f,
-        -0.5f, 0.5f,-0.5f,		0.0f, 1.0f, 0.0f,		1.0f, 0.0f,
-        -0.5f, 0.5f, 0.5f,		0.0f, 0.0f, 1.0f,		1.0f, 1.0f,
-        -0.5f, 0.5f, 0.5f,		0.0f, 0.0f, 1.0f,		1.0f, 1.0f,
-        -0.5f,-0.5f, 0.5f,		1.0f, 1.0f, 0.0f,		0.0f, 1.0f,
-        -0.5f,-0.5f,-0.5f,		1.0f, 0.0f, 0.0f,		0.0f, 0.0f,
+        -0.5f,-0.5f,-0.5f,		1.0f, 0.0f, 0.0f,		
+        -0.5f, 0.5f,-0.5f,		0.0f, 1.0f, 0.0f,		
+        -0.5f, 0.5f, 0.5f,		0.0f, 0.0f, 1.0f,		
+        -0.5f, 0.5f, 0.5f,		0.0f, 0.0f, 1.0f,		
+        -0.5f,-0.5f, 0.5f,		1.0f, 1.0f, 0.0f,		
+        -0.5f,-0.5f,-0.5f,		1.0f, 0.0f, 0.0f,		
         /* Right Position */	
-        0.5f,-0.5f,-0.5f,		1.0f, 0.0f, 0.0f,		0.0f, 0.0f,
-        0.5f, 0.5f,-0.5f,		0.0f, 1.0f, 0.0f,		1.0f, 0.0f,
-        0.5f, 0.5f, 0.5f,		0.0f, 0.0f, 1.0f,		1.0f, 1.0f,
-        0.5f, 0.5f, 0.5f,		0.0f, 0.0f, 1.0f,		1.0f, 1.0f,
-        0.5f,-0.5f, 0.5f,		1.0f, 1.0f, 0.0f,		0.0f, 1.0f,
-        0.5f,-0.5f,-0.5f,		1.0f, 0.0f, 0.0f,		0.0f, 0.0f,
+        0.5f,-0.5f,-0.5f,		1.0f, 0.0f, 0.0f,		
+        0.5f, 0.5f,-0.5f,		0.0f, 1.0f, 0.0f,		
+        0.5f, 0.5f, 0.5f,		0.0f, 0.0f, 1.0f,		
+        0.5f, 0.5f, 0.5f,		0.0f, 0.0f, 1.0f,		
+        0.5f,-0.5f, 0.5f,		1.0f, 1.0f, 0.0f,		
+        0.5f,-0.5f,-0.5f,		1.0f, 0.0f, 0.0f,		
         /* Back Position */		
-        -0.5f, 0.5f,-0.5f,		1.0f, 0.0f, 0.0f,		0.0f, 0.0f,
-        0.5f, 0.5f,-0.5f,		0.0f, 1.0f, 0.0f,		1.0f, 0.0f,
-        0.5f, 0.5f, 0.5f,		0.0f, 0.0f, 1.0f,		1.0f, 1.0f,
-        0.5f, 0.5f, 0.5f,		0.0f, 0.0f, 1.0f,		1.0f, 1.0f,
-        -0.5f, 0.5f, 0.5f,		1.0f, 1.0f, 0.0f,		0.0f, 1.0f,
-        -0.5f, 0.5f,-0.5f,		1.0f, 0.0f, 0.0f,		0.0f, 0.0f,
+        -0.5f, 0.5f,-0.5f,		1.0f, 0.0f, 0.0f,		
+        0.5f, 0.5f,-0.5f,		0.0f, 1.0f, 0.0f,		
+        0.5f, 0.5f, 0.5f,		0.0f, 0.0f, 1.0f,		
+        0.5f, 0.5f, 0.5f,		0.0f, 0.0f, 1.0f,		
+        -0.5f, 0.5f, 0.5f,		1.0f, 1.0f, 0.0f,		
+        -0.5f, 0.5f,-0.5f,		1.0f, 0.0f, 0.0f,		
         /* Front Position */
-        -0.5f,-0.5f,-0.5f,		1.0f, 0.0f, 0.0f,		0.0f, 0.0f,
-        0.5f,-0.5f,-0.5f,		0.0f, 1.0f, 0.0f,		1.0f, 0.0f,
-        0.5f,-0.5f, 0.5f,		0.0f, 0.0f, 1.0f,		1.0f, 1.0f,
-        0.5f,-0.5f, 0.5f,		0.0f, 0.0f, 1.0f,		1.0f, 1.0f,
-        -0.5f,-0.5f, 0.5f,		1.0f, 1.0f, 0.0f,		0.0f, 1.0f,
-        -0.5f,-0.5f,-0.5f,		1.0f, 0.0f, 0.0f,		0.0f, 0.0f,
+        -0.5f,-0.5f,-0.5f,		1.0f, 0.0f, 0.0f,		
+        0.5f,-0.5f,-0.5f,		0.0f, 1.0f, 0.0f,		
+        0.5f,-0.5f, 0.5f,		0.0f, 0.0f, 1.0f,		
+        0.5f,-0.5f, 0.5f,		0.0f, 0.0f, 1.0f,		
+        -0.5f,-0.5f, 0.5f,		1.0f, 1.0f, 0.0f,		
+        -0.5f,-0.5f,-0.5f,		1.0f, 0.0f, 0.0f,		
 
     };
 
@@ -59,19 +59,13 @@ Light::Light()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
 
 	//Position 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
     m_position = glm::vec3(0.0f, 2.0f, -2.0f);
-}
-
-
-Light::~Light()
-{
-
 }
 
 
@@ -103,8 +97,12 @@ void Light::Update(GLFWwindow *window)
 		m_position.y += m_speed;
 	else if (glfwGetKey(window, GLFW_KEY_K) == GLFW_TRUE)
 		m_position.y -= m_speed;
-    else if (glfwGetKey(window, GLFW_KEY_U) == GLFW_TRUE)
+    else if (glfwGetKey(window, GLFW_KEY_O) == GLFW_TRUE)
 		m_position.z += m_speed;
-	else if (glfwGetKey(window, GLFW_KEY_O) == GLFW_TRUE)
+	else if (glfwGetKey(window, GLFW_KEY_U) == GLFW_TRUE)
 		m_position.z -= m_speed;
+}
+
+Light::~Light()
+{
 }
