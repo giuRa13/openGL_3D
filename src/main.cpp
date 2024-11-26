@@ -8,6 +8,7 @@
 #include "Pyramid.hpp"
 #include "Floor.hpp"
 #include "Light.hpp"
+#include "Model.hpp"
 #include <iostream>
 #include <cmath>
 #include <glm/glm.hpp>
@@ -60,6 +61,7 @@ static float ambient_Strenght = {0.1f};
 static float light_diffuse[3] = { 0.5f, 0.5f, 0.5f};
 static float diffuse_Strenght = {1.f};
 static float light_specular[3] = { 1.0f, 1.0f, 1.0f};
+static int light_power = {2}; //(Attenuation power)
 
 
 int main()
@@ -76,6 +78,9 @@ int main()
 	Pyramid pyramid2("../textures/bricks_white.jpg");
 	Floor floor("../textures/Tile_20.png");
 
+	Model girl("../models/girl.obj");
+	Model chair("../models/Armchair.obj");
+
 	Light light;
 	light.SetSpeed(0.1f);
 
@@ -83,6 +88,7 @@ int main()
 	lightShader.Create("../shaders/lightCube.vert", "../shaders/lightCube.frag");
 	Shader myShader;
 	myShader.Create("../shaders/default.vert", "../shaders/default.frag");
+	//myShader.Create("../shaders/default.vert", "../shaders/lights.frag");
 
 
 	while (!mainWindow.getShouldClose())
@@ -127,9 +133,9 @@ int main()
 		/*myShader.setVec3("dirLight.direction", -0.0f, -0.0f, -0.0f);
 		myShader.setVec3("dirLight.ambient",  glm::vec3(0.1f));
 		myShader.setVec3("dirLight.diffuse",  glm::vec3(0.1f));
-		myShader.setVec3("dirLight.specular",  glm::vec3(0.5f));
+		myShader.setVec3("dirLight.specular",  glm::vec3(0.5f));*/
 		// Spot Lights
-		myShader.setVec3("spotLight.position", camera.Position);
+		/*myShader.setVec3("spotLight.position", camera.Position);
 		myShader.setVec3("spotLight.direction", camera.Front);
 		myShader.setVec3("viewPos", camera.Position);
 		myShader.setVec3("spotLight.ambient", 0.9f, 0.9f, 0.9f);
@@ -139,7 +145,7 @@ int main()
 		myShader.setFloat("spotLight.linear", 0.09f);
 		myShader.setFloat("spotLight.quadratic", 0.032f);
 		myShader.setFloat("spotLight.cutOff", glm::cos(glm::radians(13.0f)));
-		myShader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.5f)));*/		
+		myShader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.5f)));	*/	
 		////////////////////////
 
 		//myShader.setVec3("lightColor", light_color[0], light_color[1], light_color[2]);
@@ -151,6 +157,7 @@ int main()
 		myShader.setFloat("light.constant", 1.0f);
 		myShader.setFloat("light.linear", 0.09f);
 		myShader.setFloat("light.quadratic", 0.032f);
+		myShader.setInt("lightPower", light_power);
 		
 		//myShader.setVec3("colors", color_value[0], color_value[1], color_value[2]);
 		//myShader.setBool("isTexture", isTexture);
@@ -159,7 +166,7 @@ int main()
 		myShader.setVec3("material.specular", material_specular[0], material_specular[1], material_specular[2]);
 		myShader.setFloat("material.shininess", material_shininess);
 
-		projection = glm::perspective(glm::radians(camera.Zoom), (float)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 1000.0f);
+		projection = glm::perspective(glm::radians(camera.Zoom), (float)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 100.0f);
 		myShader.setMat4("projection", projection);
 
 		view = glm::mat4(1.0f);
@@ -196,7 +203,20 @@ int main()
 		model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 		myShader.setMat4("model", model);
 		floor.Render(myShader);
-		
+
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.f, -4.5f));
+		myShader.setMat4("model", model);
+		girl.Draw(myShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(9.0f, -4.0f, -3.5f));
+		myShader.setMat4("model", model);
+		chair.Draw(myShader);
+
 
 		lightShader.use();
 		light.Update(mainWindow.getWindow());
@@ -291,6 +311,7 @@ void LightImGui()
 	ImGui::SliderFloat("Material Shininess", &material_shininess, 0.0f, 600.f);
 	ImGui::InvisibleButton("##space", ImVec2(1.f,12.f));
 
+	ImGui::SliderInt("Light Attenuation", &light_power, 0, 10);
 	ImGui::SliderFloat("Light Ambient", &ambient_Strenght, 0.0f, 1.0f);
 	ImGui::ColorEdit3("Ambient Color", light_ambient);
 	ImGui::SliderFloat("Light Diffuse", &diffuse_Strenght, 0.0f, 1.0f);
