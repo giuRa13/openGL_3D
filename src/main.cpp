@@ -51,11 +51,12 @@ static float angle = -55.0f;
 static bool isTexture = false;
 static bool isColor = false;
 bool ShowDemo = false;
+static float clear_color[4] = { 0.02f, 0.08f, 0.09f, 1.0f};
 //static float material_diffuse[3] = {1.0f, 1.0f, 1.0f};
 static float material_specular[3] = {0.5f, 0.5f, 0.5f};
 static float material_shininess = {64.0f};
-static float light_ambient[3] = { 0.1f, 0.1f, 0.1f};
-static float ambient_Strenght = {1.f};
+static float light_ambient[3] = { 1.0f, 1.0f, 1.0f};
+static float ambient_Strenght = {0.1f};
 static float light_diffuse[3] = { 0.5f, 0.5f, 0.5f};
 static float diffuse_Strenght = {1.f};
 static float light_specular[3] = { 1.0f, 1.0f, 1.0f};
@@ -105,8 +106,9 @@ int main()
 
 		////////////////////////////////////////////////////////////////
 		/* Render */
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f); 
+		//glClearColor(0.0f, 0.0f, 0.0f, 1.0f); 
 		//glClearColor(0.1f, 0.2f, 0.3f, 1.0f); 
+		glClearColor(clear_color[0], clear_color[1], clear_color[2], clear_color[2]);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		ImGui_ImplOpenGL3_NewFrame();
@@ -118,6 +120,7 @@ int main()
 		if (ShowDemo)
 			ImGui::ShowDemoWindow(&ShowDemo);
 
+
 		myShader.use();
 		//myShader.setVec3("lightColor", light_color[0], light_color[1], light_color[2]);
 		myShader.setVec3("light.position", light.getPosition());
@@ -125,6 +128,9 @@ int main()
 		myShader.setVec3("light.ambient", light_ambient[0]*ambient_Strenght, light_ambient[1]*ambient_Strenght, light_ambient[2]*ambient_Strenght);
 		myShader.setVec3("light.diffuse", light_diffuse[0]*diffuse_Strenght, light_diffuse[1]*diffuse_Strenght, light_diffuse[2]*diffuse_Strenght);
 		myShader.setVec3("light.specular",light_specular[0], light_specular[1], light_specular[2]);
+		myShader.setFloat("light.constant", 1.0f);
+		myShader.setFloat("light.linear", 0.09f);
+		myShader.setFloat("light.quadratic", 0.032f);
 		
 		//myShader.setVec3("colors", color_value[0], color_value[1], color_value[2]);
 		//myShader.setBool("isTexture", isTexture);
@@ -270,6 +276,9 @@ void LightImGui()
 	ImGui::SliderFloat("Light Diffuse", &diffuse_Strenght, 0.0f, 1.0f);
 	ImGui::ColorEdit3("Diffuse Color", light_diffuse);
 	ImGui::SliderFloat3("Light Specular", light_specular, 0.0f, 1.0f);
+
+	ImGui::InvisibleButton("##space", ImVec2(1.f,12.f));
+	ImGui::ColorEdit4("Background Color", clear_color);
 
 	ImGui::InvisibleButton("##space", ImVec2(1.f,12.f));
 	CustomButtons();
