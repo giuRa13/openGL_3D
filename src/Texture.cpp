@@ -64,13 +64,11 @@ void Texture::Unbind()
 void Texture::UseTexture()
 {
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, textureID);
 }
 
 void Texture::UseTexture2()
 {
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, textureID);
 }
 
 void Texture::ClearTexture()

@@ -56,7 +56,8 @@ void Floor::Render(Shader &shader)
 {
 	glBindVertexArray(VAO);
 
-    shader.setInt("texture1", 0);
+    //shader.setInt("texture1", 0);
+    shader.setInt("material.diffuse", 0);
     m_texture.Bind();
 	
     glDrawArrays(GL_TRIANGLES, 0, 36);

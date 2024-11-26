@@ -51,8 +51,7 @@ static float angle = -55.0f;
 static bool isTexture = false;
 static bool isColor = false;
 bool ShowDemo = false;
-static float material_ambient[3] = {1.0f, 1.0f, 1.0f};
-static float material_diffuse[3] = {1.0f, 1.0f, 1.0f};
+//static float material_diffuse[3] = {1.0f, 1.0f, 1.0f};
 static float material_specular[3] = {0.5f, 0.5f, 0.5f};
 static float material_shininess = {64.0f};
 static float light_ambient[3] = { 0.1f, 0.1f, 0.1f};
@@ -72,6 +71,7 @@ int main()
 
 
 	Cube cube("../textures/container2.png");
+	//Cube cube("../textures/container2.png", "../textures/container2_specular.png");
 	Pyramid pyramid("../textures/bricks_yellow.jpg");
 	Pyramid pyramid2("../textures/bricks_white.jpg");
 	Floor floor("../textures/Tile_20.png");
@@ -130,8 +130,6 @@ int main()
 		//myShader.setBool("isTexture", isTexture);
 		//myShader.setBool("isColor", isColor);
 
-		myShader.setVec3("material.ambient", material_ambient[0], material_ambient[1], material_ambient[2]);
-		myShader.setVec3("material.diffuse", material_diffuse[0], material_diffuse[1], material_diffuse[2]);
 		myShader.setVec3("material.specular", material_specular[0], material_specular[1], material_specular[2]);
 		myShader.setFloat("material.shininess", material_shininess);
 
@@ -263,8 +261,6 @@ void LightImGui()
 	ImGui::Begin("Light test");
 	ImGui::Text("FPS = %f", ImGui::GetIO().Framerate);
 
-	ImGui::SliderFloat3("Material Ambient", material_ambient, 0.0f, 1.0f);
-	ImGui::SliderFloat3("Material Diffuse", material_diffuse, 0.0f, 1.0f);
 	ImGui::SliderFloat3("Material Specular", material_specular, 0.0f, 1.0f);
 	ImGui::SliderFloat("Material Shininess", &material_shininess, 0.0f, 600.f);
 	ImGui::InvisibleButton("##space", ImVec2(1.f,12.f));
