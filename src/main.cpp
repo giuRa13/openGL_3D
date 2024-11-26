@@ -72,7 +72,6 @@ int main()
 
 
 	Cube cube("../textures/container2.png");
-	//Cube cube("../textures/container2.png", "../textures/container2_specular.png");
 	Pyramid pyramid("../textures/bricks_yellow.jpg");
 	Pyramid pyramid2("../textures/bricks_white.jpg");
 	Floor floor("../textures/Tile_20.png");
@@ -81,7 +80,7 @@ int main()
 	light.SetSpeed(0.1f);
 
 	Shader lightShader;
-	lightShader.Create("../shaders/light.vert", "../shaders/light.frag");
+	lightShader.Create("../shaders/lightCube.vert", "../shaders/lightCube.frag");
 	Shader myShader;
 	myShader.Create("../shaders/default.vert", "../shaders/default.frag");
 
@@ -122,6 +121,27 @@ int main()
 
 
 		myShader.use();
+
+		////////////////////////
+		// Dir Light
+		/*myShader.setVec3("dirLight.direction", -0.0f, -0.0f, -0.0f);
+		myShader.setVec3("dirLight.ambient",  glm::vec3(0.1f));
+		myShader.setVec3("dirLight.diffuse",  glm::vec3(0.1f));
+		myShader.setVec3("dirLight.specular",  glm::vec3(0.5f));
+		// Spot Lights
+		myShader.setVec3("spotLight.position", camera.Position);
+		myShader.setVec3("spotLight.direction", camera.Front);
+		myShader.setVec3("viewPos", camera.Position);
+		myShader.setVec3("spotLight.ambient", 0.9f, 0.9f, 0.9f);
+		myShader.setVec3("spotLight.diffuse", 0.9f, 0.9f, 0.9f);
+		myShader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0);
+		myShader.setFloat("spotLight.constant", 1.0f);
+		myShader.setFloat("spotLight.linear", 0.09f);
+		myShader.setFloat("spotLight.quadratic", 0.032f);
+		myShader.setFloat("spotLight.cutOff", glm::cos(glm::radians(13.0f)));
+		myShader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.5f)));*/		
+		////////////////////////
+
 		//myShader.setVec3("lightColor", light_color[0], light_color[1], light_color[2]);
 		myShader.setVec3("light.position", light.getPosition());
 		myShader.setVec3("viewPos", camera.Position);
@@ -139,7 +159,7 @@ int main()
 		myShader.setVec3("material.specular", material_specular[0], material_specular[1], material_specular[2]);
 		myShader.setFloat("material.shininess", material_shininess);
 
-		projection = glm::perspective(glm::radians(camera.Zoom), (float)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 100.0f);
+		projection = glm::perspective(glm::radians(camera.Zoom), (float)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 1000.0f);
 		myShader.setMat4("projection", projection);
 
 		view = glm::mat4(1.0f);
