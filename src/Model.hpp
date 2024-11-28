@@ -16,18 +16,54 @@
 unsigned int TextureFromFile(const char* path, const std::string& directory);
 
 
-class Model {
+class Model 
+{
+
 public:
 
 	Model(const char* path)
 	{
+	    m_position = glm::vec3(0.0f);
+   		m_rotation = glm::vec3(0.0f); 
+    	m_scale = glm::vec3(1.0f);
+
 		this->loadModel(path);
+	}
+
+	void SetPosition(GLfloat x, GLfloat y, GLfloat z)
+	{
+		m_position.x = x;
+		m_position.y = y;
+		m_position.z = z;
+	}
+
+	void SetRotation(GLfloat pitch, GLfloat yaw, GLfloat roll)
+	{
+		m_rotation.x = pitch;
+		m_rotation.y = yaw;
+		m_rotation.z = roll;
+	}
+
+	void SetScale(GLfloat x, GLfloat y, GLfloat z)
+	{
+		m_scale.x = x;
+		m_scale.y = y;
+		m_scale.z = z;
 	}
 
 	void Draw(Shader& shader)
 	{
         //for(int i = 0; i < meshes.size(); i++)
             //meshes[i].Draw(shader);
+			
+		m_model = glm::mat4(1.0f);   
+		m_model = glm::translate(m_model, m_position);
+		m_model = glm::rotate(m_model, glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));//rotate 90 on the X axis
+		m_model = glm::rotate(m_model, glm::radians(m_rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));//rotate 90 on the X axis
+		m_model = glm::rotate(m_model, glm::radians(m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));//rotate 90 on the X axis
+		m_model = glm::scale(m_model, m_scale);
+
+		shader.setMat4("model", m_model);
 
 		for (auto mesh : meshes)
 			mesh.Draw(shader);
@@ -37,6 +73,11 @@ private:
 	std::vector<ModelTexture> textures_loaded;
 	std::vector<ModelMesh> meshes;
 	std::string directory;
+	
+	glm::mat4 m_model;
+	glm::vec3 m_position;
+    glm::vec3 m_rotation;
+    glm::vec3 m_scale;
 
 	void loadModel(const std::string& path)
 	{
@@ -127,10 +168,10 @@ private:
 		// Texture
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 		// Diffuse Map
-		std::vector<ModelTexture> diffuseMaps = loadMaterialTexture(material, aiTextureType_DIFFUSE, "material.diffuse");//texture_diffuse
+		std::vector<ModelTexture> diffuseMaps = loadMaterialTexture(material, aiTextureType_DIFFUSE, "texture_diffuse");//texture_diffuse
 		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 		// Specular Map
-		std::vector<ModelTexture> specularMaps = loadMaterialTexture(material, aiTextureType_SPECULAR, "meterial.specular");
+		std::vector<ModelTexture> specularMaps = loadMaterialTexture(material, aiTextureType_SPECULAR, "texture_specular");
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 
 		return ModelMesh(vertices, indices, textures);

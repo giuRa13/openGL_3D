@@ -25,7 +25,9 @@ public:
     void GetOpenGLVersionInfo();
     void set_theme1();
     void set_theme2();
+    void CustomButtons();
     bool changeTheme = false;
+    bool ShowDemo = false;
 
 
 private:

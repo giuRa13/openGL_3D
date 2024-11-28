@@ -100,6 +100,36 @@ void Window::GetOpenGLVersionInfo()
     std::cout <<"\n";
 }
 
+void Window::CustomButtons()
+{
+	std::string btn1 = "Theme";
+	std::string btn2 = "Default";
+	std::string btn3 = "Demo";
+	auto windowWidth = ImGui::GetWindowSize().x;
+    auto textWidth   = ImGui::CalcTextSize(btn1.c_str()).x + 
+		ImGui::CalcTextSize(btn2.c_str()).x +
+		ImGui::CalcTextSize(btn3.c_str()).x + 40;
+
+    ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
+	if (ImGui::Button(btn3.c_str()))
+		ShowDemo = true;
+	ImGui::SameLine();
+	if(ImGui::Button(btn1.c_str()))
+        (changeTheme ? set_theme1() : set_theme2());
+    ImGui::SameLine();
+    if(ImGui::Button(btn2.c_str()))
+    {
+        ImGui::StyleColorsDark();
+
+        ImGuiStyle& style = ImGui::GetStyle();
+        style.WindowRounding = 0.0f;
+		style.WindowRounding = 0.0f;
+		style.FrameRounding = 0.0f;
+		style.GrabRounding = 0.0f;
+		style.TabRounding = 0.f;
+		style.ChildRounding = 0.f;
+    }
+}
 
 void Window::set_theme1()
 {

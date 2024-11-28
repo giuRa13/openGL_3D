@@ -54,10 +54,12 @@ Floor::~Floor()
 
 void Floor::Render(Shader &shader)
 {
+    Object::Render(shader);
+    
 	glBindVertexArray(VAO);
 
     //shader.setInt("texture1", 0);
-    shader.setInt("material.diffuse", 0);
+    //shader.setInt("material_diffuse", 0);
     m_texture.Bind();
 	
     glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -69,7 +71,3 @@ void Floor::Render(Shader &shader)
     glDeleteBuffers(1, &VBO);
 }
 
-void Floor::Update()
-{
-
-}

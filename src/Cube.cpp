@@ -160,37 +160,26 @@ Cube::Cube(const char* diffuse, const char* specular)
 
 Cube::~Cube()
 {
+    //glDeleteBuffers(1, &VAO);
+    //glDeleteBuffers(1, &VBO);
 }
 
 void Cube::Render(Shader &shader)
 {
+    Object::Render(shader);
+
 	glBindVertexArray(VAO);
 
     //shader.setInt("texture1", 0);
-    shader.setInt("material.diffuse", 0);
+    //shader.setInt("texture_diffuse", 0);
     //glActiveTexture(GL_TEXTURE0);
     m_texture.Bind();
-
-    /*if(b_specular)
-    {
-        shader.setInt("material.specular", 1);
-        glActiveTexture(GL_TEXTURE1);
-        m_diffuse.Bind();
-    }*/
 	
     glDrawArrays(GL_TRIANGLES, 0, 36);
 
 	glBindVertexArray(0);
     m_texture.Unbind();
-    if(b_specular)
-        m_diffuse.Unbind();
-    b_specular = false;
 
     glDeleteBuffers(1, &VAO);
     glDeleteBuffers(1, &VBO);
-}
-
-void Cube::Update()
-{
-
 }

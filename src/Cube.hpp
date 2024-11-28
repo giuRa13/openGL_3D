@@ -2,10 +2,11 @@
 
 #include "Texture.hpp"
 #include "Shader.hpp"
+#include "Object.hpp"
 #include <glm/glm.hpp>
 
 
-class Cube
+class Cube : public Object
 {
 
 public:
@@ -13,8 +14,8 @@ public:
     Cube(const char* diffuse, const char* specular);
     ~Cube();
 
-    void Update();
-    void Render(Shader &shader);
+    void Update() override {}
+    void Render(Shader &shader) override;
 
 
 private:
@@ -24,9 +25,5 @@ private:
     const char* fileLocation;
     const char* specularMap;
     bool b_specular = false;
-
-    glm::mat4 m_model;
-    glm::vec3 m_position;
-
 
 };

@@ -51,6 +51,7 @@ add_executable(base
     src/Pyramid.cpp
     src/Floor.cpp
     src/Light.cpp
+    src/Object.cpp
 )
     
 

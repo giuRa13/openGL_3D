@@ -67,9 +67,11 @@ Pyramid::~Pyramid()
 
 void Pyramid::Render(Shader &shader)
 {
+    Object::Render(shader);
+
 	glBindVertexArray(VAO);
 	
-    shader.setInt("material.diffuse", 0);
+    //shader.setInt("material.diffuse", 0);
     m_texture.Bind();
 
     glDrawArrays(GL_TRIANGLES, 0, 18);
@@ -81,7 +83,3 @@ void Pyramid::Render(Shader &shader)
     glDeleteBuffers(1, &VBO);
 }
 
-void Pyramid::Update()
-{
-
-}
