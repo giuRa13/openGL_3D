@@ -51,7 +51,7 @@ static float angle = -55.0f;
 static float material_specular[3] = {0.5f, 0.5f, 0.5f};
 static float material_shininess = {64.0f};
 
-Camera camera(glm::vec3(0.0f, 0.0f, 7.0f));
+Camera camera(glm::vec3(0.0f, 1.0f, 7.0f));
 
 int main()
 {
@@ -72,44 +72,44 @@ int main()
 
 	std::vector<std::unique_ptr<Object>> objects;
 	objects.push_back(std::make_unique<Cube>("../textures/container2.png"));
-	objects.back()->SetPosition(0.0f, 0.25f, 0.0f);
-	objects.back()->SetRotation(90.0f, 0.0f, 0.0f);
-	objects.back()->SetScale(0.5f, 0.5f, 0.5f);
+	objects.back()->GetTransform().SetPosition(0.0f, 0.25f, 0.0f);
+	objects.back()->GetTransform().SetRotation(0.0f, 15.0f, 0.0f);
+	objects.back()->GetTransform().SetScale(0.5f, 0.5f, 0.5f);
 
-	objects.push_back(std::make_unique<Cube>("../textures/container2.png"));
-	objects.back()->SetPosition(-0.75f, 0.25f, -1.0f);
-	objects.back()->SetRotation(0.0f, 30.0f, 0.0f);
-	objects.back()->SetScale(0.5f, 0.5f, 0.5f);
+	objects.push_back(std::make_unique<Cube>("../textures/wood1.png"));
+	objects.back()->GetTransform().SetPosition(-0.75f, 0.25f, -1.0f);
+	objects.back()->GetTransform().SetRotation(0.0f, 30.0f, 0.0f);
+	objects.back()->GetTransform().SetScale(0.5f, 0.5f, 0.5f);
 
 	objects.push_back(std::make_unique<Floor>("../textures/Tile_20.png"));
-	objects.back()->SetPosition(0.0f, 0.0f, 0.0f);
-	objects.back()->SetRotation(0.0f, 0.0f, 0.0f);
-	objects.back()->SetScale(0.75f, 0.75f, 0.75f);
+	objects.back()->GetTransform().SetPosition(0.0f, 0.0f, 0.0f);
+	objects.back()->GetTransform().SetRotation(0.0f, 0.0f, 0.0f);
+	objects.back()->GetTransform().SetScale(0.75f, 0.75f, 0.75f);
 
 	objects.push_back(std::make_unique<Pyramid>("../textures/bricks_white.jpg"));
-	objects.back()->SetPosition(-6.0f, 1.5f, -5.5f);
-	objects.back()->SetRotation(270.0f, 0.0f, 0.0f);
-	objects.back()->SetScale(2.0f, 2.0f, 2.0f);
+	objects.back()->GetTransform().SetPosition(-6.0f, 1.5f, -5.5f);
+	objects.back()->GetTransform().SetRotation(270.0f, 0.0f, 0.0f);
+	objects.back()->GetTransform().SetScale(2.0f, 2.0f, 2.0f);
 
 	objects.push_back(std::make_unique<Pyramid>("../textures/bricks_yellow.jpg"));
-	objects.back()->SetPosition(-4.0f, 1.0f, -4.0f);
-	objects.back()->SetRotation(270.0f, 0.0f, 0.0f);
-	objects.back()->SetScale(1.5f, 1.5f, 1.5f);
+	objects.back()->GetTransform().SetPosition(-4.0f, 1.0f, -4.0f);
+	objects.back()->GetTransform().SetRotation(270.0f, 0.0f, 0.0f);
+	objects.back()->GetTransform().SetScale(1.5f, 1.5f, 1.5f);
 
 	std::vector<std::unique_ptr<Model>> models;
 	models.push_back(std::make_unique<Model>("../models/girl.obj"));
-	models.back()->SetPosition(4.5f, 1.5f, -5.5f);
-	models.back()->SetScale(1.25f, 1.25f, 1.25f);
+	models.back()->GetTransform().SetPosition(4.5f, 1.5f, -5.5f);
+	models.back()->GetTransform().SetScale(1.25f, 1.25f, 1.25f);
 
 	models.push_back(std::make_unique<Model>("../models/Armchair.obj"));
-	models.back()->SetPosition(4.5f, 0.0f, -1.5f);
-	models.back()->SetRotation(0.0f, -40.0f, 0.0f);
-	models.back()->SetScale(0.4f, 0.4f, 0.4f);
+	models.back()->GetTransform().SetPosition(4.5f, 0.0f, -1.5f);
+	models.back()->GetTransform().SetRotation(0.0f, -40.0f, 0.0f);
+	models.back()->GetTransform().SetScale(0.4f, 0.4f, 0.4f);
 
 	models.push_back(std::make_unique<Model>("../models/ship/scene.gltf"));
-	models.back()->SetPosition(-0.5f, 0.0f, -5.5f);
-	models.back()->SetRotation(-90.0f, -23.0f, 0.0f);
-	models.back()->SetScale(0.3f, 0.3f, 0.3f);
+	models.back()->GetTransform().SetPosition(-0.5f, 0.0f, -5.5f);
+	models.back()->GetTransform().SetRotation(-90.0f, -23.0f, 0.0f);
+	models.back()->GetTransform().SetScale(0.3f, 0.3f, 0.3f);
 
 
 	while (!mainWindow.getShouldClose())
@@ -123,8 +123,7 @@ int main()
 		lastFrame = time;
 
 		////////////////////////////////////////////////////////////////
-		/* Render */
-		//glClearColor(0.0f, 0.0f, 0.0f, 1.0f); 
+		/* Render */ 
 		//glClearColor(0.1f, 0.2f, 0.3f, 1.0f); 
 		glClearColor(clear_color[0], clear_color[1], clear_color[2], clear_color[3]);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -220,15 +219,6 @@ void userInput(GLFWwindow* window)
 		camera.ProcessKeyboard(TURN_UP, deltaTime);
 	else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_TRUE) 
 		camera.ProcessKeyboard(TURN_DOWN, deltaTime);
-
-	/*if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		myPos.y += 0.1f;
-	else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		myPos.y -= 0.1f;
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		myPos.x += 0.1f;
-	else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		myPos.x -= 0.1f;*/
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)

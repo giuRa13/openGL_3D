@@ -2,6 +2,7 @@
 
 #include "ModelMesh.hpp"
 #include "Shader.hpp"
+#include "Transform.hpp"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -23,32 +24,12 @@ public:
 
 	Model(const char* path)
 	{
-	    m_position = glm::vec3(0.0f);
-   		m_rotation = glm::vec3(0.0f); 
-    	m_scale = glm::vec3(1.0f);
-
 		this->loadModel(path);
 	}
 
-	void SetPosition(GLfloat x, GLfloat y, GLfloat z)
+	Transform& GetTransform()
 	{
-		m_position.x = x;
-		m_position.y = y;
-		m_position.z = z;
-	}
-
-	void SetRotation(GLfloat pitch, GLfloat yaw, GLfloat roll)
-	{
-		m_rotation.x = pitch;
-		m_rotation.y = yaw;
-		m_rotation.z = roll;
-	}
-
-	void SetScale(GLfloat x, GLfloat y, GLfloat z)
-	{
-		m_scale.x = x;
-		m_scale.y = y;
-		m_scale.z = z;
+		return m_transform;
 	}
 
 	void Draw(Shader& shader)
@@ -56,14 +37,7 @@ public:
         //for(int i = 0; i < meshes.size(); i++)
             //meshes[i].Draw(shader);
 			
-		m_model = glm::mat4(1.0f);   
-		m_model = glm::translate(m_model, m_position);
-		m_model = glm::rotate(m_model, glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));//rotate 90 on the X axis
-		m_model = glm::rotate(m_model, glm::radians(m_rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));//rotate 90 on the X axis
-		m_model = glm::rotate(m_model, glm::radians(m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));//rotate 90 on the X axis
-		m_model = glm::scale(m_model, m_scale);
-
-		shader.setMat4("model", m_model);
+		shader.setMat4("model", m_transform.GetMatrix());
 
 		for (auto mesh : meshes)
 			mesh.Draw(shader);
@@ -73,11 +47,8 @@ private:
 	std::vector<ModelTexture> textures_loaded;
 	std::vector<ModelMesh> meshes;
 	std::string directory;
-	
-	glm::mat4 m_model;
-	glm::vec3 m_position;
-    glm::vec3 m_rotation;
-    glm::vec3 m_scale;
+
+	Transform m_transform;
 
 	void loadModel(const std::string& path)
 	{

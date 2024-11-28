@@ -52,6 +52,7 @@ add_executable(base
     src/Floor.cpp
     src/Light.cpp
     src/Object.cpp
+    src/Transform.cpp
 )
     
 
